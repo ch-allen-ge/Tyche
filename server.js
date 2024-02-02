@@ -39,10 +39,8 @@ app.use('/user', usersRoutes);
 app.use('/profile', profileRoutes);
 app.use('/workouts', workoutsRoutes);
 
-// const port = process.env.PORT;
+const port = process.env.PORT;
 
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// });
-
-module.exports.handler = serverless(app);
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
