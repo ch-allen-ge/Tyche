@@ -11,7 +11,7 @@ const passport = require('passport');
 const initializePassport = require('../../src/middleware/passport-config.js');
 initializePassport(passport);
 
-router.get('/checkHealth', () => {
+router.get('/checkHealth', (req, res) => {
   res.send('healthy');
 });
 

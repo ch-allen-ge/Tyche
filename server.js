@@ -10,7 +10,6 @@ const profileRoutes = require('./src/routes/profileRoutes.js');
 const workoutsRoutes = require('./src/routes/workoutsRoutes.js');
 const genFunc = require('connect-pg-simple');
 const fileUpload = require('express-fileupload');
-const serverless = require('serverless-http');
 
 const app = express();
 const PostgresqlStore = genFunc(session);
