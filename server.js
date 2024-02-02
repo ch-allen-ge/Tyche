@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
-const initializePassport = require('./src/middleware/passport-config.js'); //
+const initializePassport = require('./src/middleware/passport-config.js');
 const session = require('express-session');
 const cors = require('cors');
 const mainRoutes = require('./src/routes/mainRoutes.js');
