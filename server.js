@@ -10,6 +10,7 @@ const profileRoutes = require('./src/routes/profileRoutes.js');
 const workoutsRoutes = require('./src/routes/workoutsRoutes.js');
 const genFunc = require('connect-pg-simple');
 const fileUpload = require('express-fileupload');
+const serverless = require("serverless-http");
 
 const app = express();
 const PostgresqlStore = genFunc(session);
@@ -38,8 +39,10 @@ app.use('/user', usersRoutes);
 app.use('/profile', profileRoutes);
 app.use('/workouts', workoutsRoutes);
 
-const port = process.env.PORT;
+// const port = process.env.PORT;
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-});
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// });
+
+module.exports.handler = serverless(app);
