@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 const { checkAuthenticated, checkNotAuthenticated } = require('../utils/authenticationUtils');
 const { registerUser } = require('../controllers/usersController');
 const {
@@ -23,7 +23,9 @@ router.post('/register', checkNotAuthenticated, async(req, res) => {
     try {
       const username = req.body.username;
       const password = req.body.password;
-      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
   
       //only run if user doesnt already exist
       await registerUser({

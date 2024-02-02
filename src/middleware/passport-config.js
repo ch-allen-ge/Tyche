@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local');
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 const { getUserPassword, getCurrentUser } = require('../controllers/usersController');
 
 const initializePassport = (passport) => {

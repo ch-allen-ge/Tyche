@@ -8,7 +8,7 @@ const {
     saveProfilePicUrl,
     getTheProfilePicKey,
     setDefaultProfilePicUrl
-} = require("../services/profile.service");
+} = require('../services/profile.service');
 
 const {
   uploadTheProfilePicture,

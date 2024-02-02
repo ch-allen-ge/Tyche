@@ -2,7 +2,7 @@ const {
   getTheCurrentUserWithoutPassword,
   registerNewUser,
   getUserHashedPassword
-} = require("../services/users.service");
+} = require('../services/users.service');
 
 const getCurrentUser = async (username) => {
   try {
