@@ -17,7 +17,7 @@ initializePassport(passport);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  domain:'.deckofdeathworkout.com',
+  domain:'deckofdeathworkout.com',
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
