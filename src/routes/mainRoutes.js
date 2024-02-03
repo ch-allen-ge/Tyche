@@ -49,7 +49,7 @@ router.post('/register', checkNotAuthenticated, async(req, res) => {
   
       req.login(user, async (err) => {
         if (err) {
-          return res.status(500).send('failed to auto log in');
+          return res.send(err);
         }
         return res.send();
       });
