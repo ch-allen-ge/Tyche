@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const initializePassport = require('./src/middleware/passport-config.js');
@@ -8,14 +8,10 @@ const mainRoutes = require('./src/routes/mainRoutes.js');
 const usersRoutes = require('./src/routes/usersRoutes.js');
 const profileRoutes = require('./src/routes/profileRoutes.js');
 const workoutsRoutes = require('./src/routes/workoutsRoutes.js');
-const genFunc = require('connect-pg-simple');
 const fileUpload = require('express-fileupload');
-
+const db = require('./src/configs/db.config.js');
 const app = express();
-const PostgresqlStore = genFunc(session);
-const sessionStore = new PostgresqlStore({
-  conString: process.env.PG_CONNECTION_STRING,
-});
+
 initializePassport(passport);
 
 app.use(express.json());
@@ -25,12 +21,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 30 * 24 * 60 * 60 * 1000, //30 days
-    sameSite: 'none',
-    secure: true
+    maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
   },
-  store: sessionStore,
-  proxy: true,
+  store: new (require('connect-pg-simple')(session))({
+    pool: db
+  })
 }));
 app.use(fileUpload());
 app.use(passport.initialize());
