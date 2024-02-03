@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const initializePassport = require('./src/middleware/passport-config.js');
@@ -32,7 +32,7 @@ app.use(session({
 app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 app.use('/', mainRoutes);
 app.use('/user', usersRoutes);
 app.use('/profile', profileRoutes);
