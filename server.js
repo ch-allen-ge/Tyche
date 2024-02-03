@@ -18,9 +18,6 @@ const sessionStore = new PostgresqlStore({
 });
 initializePassport(passport);
 
-app.use(cors({
-  origin: 'https://deckofdeathworkout.com',
-}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -35,6 +32,7 @@ app.use(session({
 app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors({credentials: true, origin: true}));
 app.use('/', mainRoutes);
 app.use('/user', usersRoutes);
 app.use('/profile', profileRoutes);
