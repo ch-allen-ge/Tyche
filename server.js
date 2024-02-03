@@ -21,11 +21,14 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
+    secure : true,
     maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
   },
   store: new (require('connect-pg-simple')(session))({
     pool: db
-  })
+  }),
+  proxy : true,
+
 }));
 app.use(fileUpload());
 app.use(passport.initialize());
