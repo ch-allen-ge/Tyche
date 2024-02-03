@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const initializePassport = require('./src/middleware/passport-config.js');
@@ -17,18 +17,16 @@ initializePassport(passport);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
+  domain:'.deckofdeathworkout.com',
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure : true,
     maxAge: 30 * 24 * 60 * 60 * 1000 //30 days
   },
   store: new (require('connect-pg-simple')(session))({
     pool: db
-  }),
-  proxy : true,
-
+  })
 }));
 app.use(fileUpload());
 app.use(passport.initialize());
