@@ -27,6 +27,8 @@ create table if not exists workouts_completed(
         timer_used boolean,
         aces_minutes_to_do integer,
         aces_seconds_to_do integer,
+        time_spent interval,
+        date_completed date,
         constraint fk_username foreign key(username) references users(username) on delete cascade
 );
 
