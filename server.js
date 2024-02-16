@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const initializePassport = require('./src/middleware/passport-config.js');
@@ -17,7 +17,7 @@ initializePassport(passport);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  domain:'deckofdeathworkout.com',
+  domain:'localhost',
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,

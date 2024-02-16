@@ -35,7 +35,6 @@ const saveCompletedWorkout = async (username, workoutDetails, dateCompleted) => 
 const getCompletedWorkouts = async (username) => {
     try {
         const response = await getTheCompletedWorkouts(username);
-        console.log(response);
         return response;
     } catch (e) {
         throw e;
