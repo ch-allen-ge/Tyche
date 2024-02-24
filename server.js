@@ -1,4 +1,7 @@
-//require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const passport = require('passport');
 const initializePassport = require('./src/middleware/passport-config.js');
