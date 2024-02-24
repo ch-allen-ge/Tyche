@@ -10,7 +10,7 @@ const dbPool = {
 
 if (process.env.NODE_ENV === 'production') {
   dbPool.ssl = {
-    rejectUnauthorized: true
+    rejectUnauthorized: false
   }
 }
 
