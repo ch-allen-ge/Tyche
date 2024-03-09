@@ -8,7 +8,7 @@ const {
     getCompletedWorkouts
 } = require('../controllers/workoutsController');
 
-router.get('/getCustomWorkouts', checkAuthenticated, async (req, res) => {
+router.get('/getSavedWorkouts', checkAuthenticated, async (req, res) => {
     try {
         const username = req.user.username;
         const response = await getCustomWorkouts(username);
