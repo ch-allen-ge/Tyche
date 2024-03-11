@@ -14,6 +14,8 @@ const workoutsRoutes = require('./src/routes/workoutsRoutes.js');
 const fileUpload = require('express-fileupload');
 const db = require('./src/configs/db.config.js');
 const app = express();
+const dodProdUrl = process.env.DOD_PROD_URL;
+const dodDevUrl = process.env.DOD_DEV_URL;
 
 initializePassport(passport);
 
@@ -34,7 +36,16 @@ app.use(session({
 app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({credentials: true, origin: true}));
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || origin === dodProdUrl || origin === dodDevUrl) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use('/', mainRoutes);
 app.use('/user', usersRoutes);
 app.use('/profile', profileRoutes);
