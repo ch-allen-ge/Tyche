@@ -32,9 +32,9 @@ const saveCompletedWorkout = async (username, workoutDetails, dateCompleted) => 
     }
 }
 
-const getCompletedWorkouts = async (username) => {
+const getCompletedWorkouts = async (username, startIndex) => {
     try {
-        const response = await getTheCompletedWorkouts(username);
+        const response = await getTheCompletedWorkouts(username, startIndex);
         return response;
     } catch (e) {
         throw e;

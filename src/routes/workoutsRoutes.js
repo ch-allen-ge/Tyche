@@ -33,7 +33,8 @@ router.post('/saveCustomWorkout', checkAuthenticated, async (req, res) => {
 router.get('/getCompletedWorkouts', checkAuthenticated, async (req, res) => {
     try {
         const username = req.user.username;
-        const response = await getCompletedWorkouts(username);
+        const startIndex = req.query.startIndex;
+        const response = await getCompletedWorkouts(username, startIndex);
         res.json(response);
     } catch (e) {
         throw e;

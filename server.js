@@ -43,5 +43,5 @@ app.use('/workouts', workoutsRoutes);
 const port = process.env.PORT;
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Tyche listening on port ${port}`)
 });
