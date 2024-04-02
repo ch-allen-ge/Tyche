@@ -2,13 +2,10 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const { checkAuthenticated, checkNotAuthenticated } = require('../utils/authenticationUtils');
 const { registerUser } = require('../controllers/usersController');
-const {
-  createNewUserProfile,
-  uploadAndSaveProPic,
-  setDefaultProfilePic
-} = require('../controllers/profileController');
+const { createNewUserProfile } = require('../controllers/profileController');
 const passport = require('passport');
 const initializePassport = require('../../src/middleware/passport-config.js');
+const { validateForm } = require('../utils/validation.js');
 initializePassport(passport);
 
 router.get('/checkHealth', (req, res) => {
@@ -19,29 +16,29 @@ router.get('/authenticateToken', checkAuthenticated, async (req, res) => {
     res.send('User authenticated');
 });
 
-router.post('/register', checkNotAuthenticated, async(req, res) => {
+router.post('/register', validateForm, checkNotAuthenticated, async(req, res) => {
     try {
       const username = req.body.username;
       const password = req.body.password;
+      const weight = req.body.weight;
+      const weightUnits = req.body.weightUnits;
+      const age = req.body.age;
+      const gender = req.body.gender;
 
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(password, salt);
   
-      //only run if user doesnt already exist
       await registerUser({
         username,
-        password: hashedPassword
+        password: hashedPassword,
+        weight,
+        weightUnits,
+        age,
+        gender
       });
   
       await createNewUserProfile(username);
 
-      if (req.files?.profilePic) {
-        const image  = Buffer.from(req.files.profilePic.data, 'binary');
-        await uploadAndSaveProPic(image, username);
-      } else {
-        await setDefaultProfilePic(username);
-      }
-  
       const user = {
         username,
         password: hashedPassword

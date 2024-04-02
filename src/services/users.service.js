@@ -1,7 +1,15 @@
 const  executeQuery = require('../database/db');
 
+const checkTheUserExists = async (username) => {
+    const query = 'select count(*) from users where username=$1';
+    const values = [username];
+    const resp = await executeQuery(query, values);
+    const foundUser = resp[0].count > 0;
+    return foundUser;
+}
+
 const getTheCurrentUserWithoutPassword = async (username) => {
-    const query = 'select user_id, username, joined_date from users where username=$1';
+    const query = 'select user_id, username, joined_date, age, gender, weight, weight_units from users where username=$1';
     const values = [username];
     const resp = await executeQuery(query, values);
     return resp;
@@ -14,13 +22,18 @@ const getUserHashedPassword = async (username) => {
     return resp;
 }
 
-const registerNewUser = async (newUserDetails) => {
-    const username = newUserDetails.username;
-    const password = newUserDetails.password;
+const registerNewUser = async ({
+    username,
+    password,
+    weight,
+    weightUnits,
+    age,
+    gender
+}) => {
     const joined_date = new Date();
     
-    const query = 'insert into users(username, password, joined_date) values($1, $2, $3)'
-    const values = [username, password, joined_date];
+    const query = 'insert into users(username, password, weight, weight_units, age, gender, joined_date) values($1, $2, $3, $4, $5, $6, $7)'
+    const values = [username, password, weight, weightUnits, age, gender, joined_date];
 
     try {
         await executeQuery(query, values);
@@ -30,6 +43,7 @@ const registerNewUser = async (newUserDetails) => {
 }
 
 module.exports = {
+    checkTheUserExists,
     getTheCurrentUserWithoutPassword,
     registerNewUser,
     getUserHashedPassword

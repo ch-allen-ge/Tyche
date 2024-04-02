@@ -61,7 +61,9 @@ router.post('/uploadAndSaveProPic', checkAuthenticated, async (req, res) => {
 
 router.patch('/updateTotalTimeSpent', checkAuthenticated, async (req, res) => {
   try {
-    await updateTotalTimeSpent(req.body.timeSpent, req.user.username);
+    const timeSpent = req.body.timeSpent;
+    const username = req.user.username;
+    await updateTotalTimeSpent(timeSpent, username);
     res.send();
   } catch (e) {
     throw e;

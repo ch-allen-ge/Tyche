@@ -1,8 +1,18 @@
 const {
+  checkTheUserExists,
   getTheCurrentUserWithoutPassword,
   registerNewUser,
   getUserHashedPassword
 } = require('../services/users.service');
+
+const checkUserExists = async (username) => {
+  try {
+    const response = await checkTheUserExists(username);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+}
 
 const getCurrentUser = async (username) => {
   try {
@@ -31,6 +41,7 @@ const getUserPassword = async(username) => {
 }
 
 module.exports = {
+  checkUserExists,
   getCurrentUser,
   registerUser,
   getUserPassword

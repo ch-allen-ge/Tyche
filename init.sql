@@ -2,6 +2,10 @@ create table if not exists users(
         user_id serial primary key,
         username varchar not null unique,
         password varchar not null,
+        age int not null,
+        gender varchar not null,
+        weight int not null,
+        weight_units varchar not null,
         joined_date date not null
 );
 
@@ -29,6 +33,12 @@ create table if not exists workouts_completed(
         aces_seconds_to_do integer,
         time_spent interval,
         date_completed date,
+        name varchar,
+        rating int,
+        notes text,
+        calories_burnt int,
+        power_score float,
+        average_heart_rate int
         constraint fk_username foreign key(username) references users(username) on delete cascade
 );
 
