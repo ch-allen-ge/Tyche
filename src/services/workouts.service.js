@@ -58,9 +58,7 @@ const saveTheCompletedWorkout = async (username, workoutDetails, dateCompleted) 
 
 const getTheCompletedWorkouts = async (username, startIndex) => {
     const query =
-        'select clubs_exercise, diamonds_exercise, hearts_exercise, spades_exercise, aces_exercise, \
-        breakout_aces, timer_used, aces_minutes_to_do, aces_seconds_to_do, time_spent, date_completed \
-        from workouts_completed where username=$1 order by workout_completed_id desc offset $2 limit 10';
+        'select * from workouts_completed where username=$1 order by workout_completed_id desc offset $2 limit 10';
     const values = [username, startIndex];
 
     try {

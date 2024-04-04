@@ -5,18 +5,23 @@ const { getUserPassword, getCurrentUser } = require('../controllers/usersControl
 const initializePassport = (passport) => {
     const authenticateUser = async (username, password, done) => {
         const passResponse = await getUserPassword(username);
+
+        if (passResponse.length === 0) {
+            return done(null, false, { message: 'Username or password incorrect' });
+        }
+
         const userPassword = passResponse[0].password;
         const user = await getCurrentUser(username);
 
         if (!user) {
-            return done(null, false, { message: 'No user with that username' });
+            return done(null, false, { message: 'Username or password incorrect' });
         }
 
         try {
             if (await bcrypt.compare(password, userPassword)) {
                 return done(null, user);
             } else {
-                return done(null, false, { message: 'Password Incorrect' });
+                return done(null, false, { message: 'Username or password incorrect' });
             }
         } catch (e) {
             return done(e);

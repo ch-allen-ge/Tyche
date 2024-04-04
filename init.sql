@@ -38,7 +38,7 @@ create table if not exists workouts_completed(
         notes text,
         calories_burnt int,
         power_score float,
-        average_heart_rate int
+        average_heart_rate int,
         constraint fk_username foreign key(username) references users(username) on delete cascade
 );
 
