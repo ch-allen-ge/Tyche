@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.ts",
     "dev": "set NODE_ENV=dev && nodemon server.ts",
-    "build": "vite build"
+    "build": "npx tsc"
   },
   "author": "",
   "license": "ISC",
