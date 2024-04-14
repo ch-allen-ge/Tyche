@@ -2,8 +2,13 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
 const { getUserPassword, getCurrentUser } = require('../controllers/usersController');
 
-const initializePassport = (passport) => {
-    const authenticateUser = async (username, password, done) => {
+interface User {
+    username: string,
+    password: string
+}
+
+const initializePassport = (passport: any) => {
+    const authenticateUser = async (username: string, password: string, done: any) => {
         const passResponse = await getUserPassword(username);
 
         if (passResponse.length === 0) {
@@ -31,14 +36,16 @@ const initializePassport = (passport) => {
     passport.use(new LocalStrategy(authenticateUser));
 
     //this is how im storing the user away
-    passport.serializeUser((user, done) => {
+    passport.serializeUser((user: User, done: any) => {
         done(null, user.username);
     });
       
-    passport.deserializeUser(async (username, done) => {
+    passport.deserializeUser(async (username: string, done: any) => {
         const user = await getCurrentUser(username);
         done(null, user);
     });
 }
 
 module.exports = initializePassport;
+
+export {};

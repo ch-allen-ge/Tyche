@@ -1,6 +1,7 @@
 const { checkUserExists } = require('../controllers/usersController');
+import { Request, Response, NextFunction } from 'express';
 
-const validateForm = async (req, res, next) => {
+const validateForm = async (req: Request, res: Response, next: NextFunction) => {
     const username = req.body.username;
     const password = req.body.password;
 

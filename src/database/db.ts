@@ -1,6 +1,6 @@
 const db = require('../configs/db.config');
 
-const executeQuery = async (dbQuery, values) => {
+const executeQuery = async (dbQuery: string, values: any) => {
     try {
         const res = await db.query(dbQuery, values);
         return res.rows;
@@ -10,3 +10,5 @@ const executeQuery = async (dbQuery, values) => {
 }
 
 module.exports = executeQuery;
+
+export {};

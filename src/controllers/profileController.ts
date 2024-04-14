@@ -3,7 +3,6 @@ const {
     getUserProfile,
     updateTheTotalTimeSpent,
     updateTheNumberWorkoutsCompleted,
-    addNewWorkoutCompleted,
     getAllWorkoutsCompleted,
     saveProfilePicUrl,
     getTheProfilePicKey,
@@ -15,7 +14,7 @@ const {
   deleteTheProfilePicture
 } = require('../utils/awsS3Utils');
 
-const createNewUserProfile = async (username) => {
+const createNewUserProfile = async (username: string) => {
     try {
         const response = await createTheNewUserProfile(username);
         return response;
@@ -24,7 +23,7 @@ const createNewUserProfile = async (username) => {
     }
 }
 
-const getProfile = async (username) => {
+const getProfile = async (username: string) => {
   try {
     const profile = await getUserProfile(username);
     return profile[0];
@@ -33,7 +32,7 @@ const getProfile = async (username) => {
   }
 }
 
-const getWorkoutsCompleted = async (username) => {
+const getWorkoutsCompleted = async (username: string) => {
   try {
     const response = await getAllWorkoutsCompleted(username);
     return response;
@@ -42,7 +41,7 @@ const getWorkoutsCompleted = async (username) => {
   }
 }
 
-const updateTotalTimeSpent = async (timeSpent, username) => {
+const updateTotalTimeSpent = async (timeSpent: string, username: string) => {
   try {
     updateTheTotalTimeSpent(timeSpent, username);
   } catch (e) {
@@ -50,7 +49,7 @@ const updateTotalTimeSpent = async (timeSpent, username) => {
   }
 }
 
-const updateNumberWorkoutsCompleted = async (username) => {
+const updateNumberWorkoutsCompleted = async (username: string) => {
   try {
     updateTheNumberWorkoutsCompleted(username);
   } catch (e) {
@@ -58,13 +57,13 @@ const updateNumberWorkoutsCompleted = async (username) => {
   }
 }
 
-const uploadAndSaveProPic = async (image, username) => {
+const uploadAndSaveProPic = async (image: Blob, username: string) => {
   const awsS3Key = await uploadTheProfilePicture(image);
   await saveProfilePicUrl(awsS3Key, username);
   return awsS3Key;
 }
 
-const getProfilePicKey = async (username) => {
+const getProfilePicKey = async (username: string) => {
   try {
     const response = await getTheProfilePicKey(username);
     return response;
@@ -73,7 +72,7 @@ const getProfilePicKey = async (username) => {
   }
 }
 
-const deleteProfilePicture = async (username) => {
+const deleteProfilePicture = async (username: string) => {
   try {
     const getS3KeyResponse = await getTheProfilePicKey(username);
     const proPicKey = getS3KeyResponse[0].pro_pic_ssskey;
@@ -85,7 +84,7 @@ const deleteProfilePicture = async (username) => {
   }
 }
 
-const setDefaultProfilePic = async (username) => {
+const setDefaultProfilePic = async (username: string) => {
   try {
     await setDefaultProfilePicUrl(username);
   } catch (e) {
@@ -104,3 +103,5 @@ module.exports = {
     deleteProfilePicture,
     setDefaultProfilePic
 };
+
+export {};

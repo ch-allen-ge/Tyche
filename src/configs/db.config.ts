@@ -5,6 +5,7 @@ const dbPool = {
 };
 
 if (process.env.NODE_ENV === 'production') {
+  //@ts-ignore
   dbPool.ssl = {
     rejectUnauthorized: false
   }
@@ -13,3 +14,5 @@ if (process.env.NODE_ENV === 'production') {
 const db = new Pool(dbPool);
 
 module.exports = db;
+
+export {};

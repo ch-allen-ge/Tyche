@@ -5,7 +5,16 @@ const {
   getUserHashedPassword
 } = require('../services/users.service');
 
-const checkUserExists = async (username) => {
+interface NewUser {
+  username: string,
+  password: string,
+  weight: number,
+  weightUnits: string,
+  age: number,
+  gender: string
+}
+
+const checkUserExists = async (username: string) => {
   try {
     const response = await checkTheUserExists(username);
     return response;
@@ -14,7 +23,7 @@ const checkUserExists = async (username) => {
   }
 }
 
-const getCurrentUser = async (username) => {
+const getCurrentUser = async (username: string) => {
   try {
     const response = await getTheCurrentUserWithoutPassword(username);
     return response[0];
@@ -23,7 +32,7 @@ const getCurrentUser = async (username) => {
   }
 }
 
-const registerUser = async (newUserDetails) => {
+const registerUser = async (newUserDetails: NewUser) => {
   try {
     await registerNewUser(newUserDetails)
   } catch (e) {
@@ -31,7 +40,7 @@ const registerUser = async (newUserDetails) => {
   }
 }
 
-const getUserPassword = async(username) => {
+const getUserPassword = async(username: string) => {
   try {
     const response = await getUserHashedPassword(username);
     return response;
@@ -47,4 +56,4 @@ module.exports = {
   getUserPassword
 }
 
-//export {};
+export {};

@@ -13,3 +13,5 @@ const S3client = new AWS.S3({
 });
 
 module.exports = S3client;
+
+export {};

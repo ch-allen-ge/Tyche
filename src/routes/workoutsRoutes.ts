@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { checkAuthenticated } = require('../utils/authenticationUtils');
-
 const {
     saveCustomWorkout,
     deleteCustomWorkout,
@@ -10,8 +9,15 @@ const {
     setRating,
     saveNote
 } = require('../controllers/workoutsController');
+import { Request, Response } from 'express';
 
-router.get('/getSavedWorkouts', checkAuthenticated, async (req, res) => {
+interface AuthenticatedRequest extends Request {
+    user: {
+      username: string,
+    }
+  }
+
+router.get('/getSavedWorkouts', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const username = req.user.username;
         const response = await getCustomWorkouts(username);
@@ -21,7 +27,7 @@ router.get('/getSavedWorkouts', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.delete('/deleteSavedWorkout', checkAuthenticated, async (req, res) => {
+router.delete('/deleteSavedWorkout', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const customWorkoutId = req.query.customWorkoutId;
         await deleteCustomWorkout(customWorkoutId);
@@ -31,7 +37,7 @@ router.delete('/deleteSavedWorkout', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/saveCustomWorkout', checkAuthenticated, async (req, res) => {
+router.post('/saveCustomWorkout', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const workoutDetails = req.body;
         const username = req.user.username;
@@ -43,7 +49,7 @@ router.post('/saveCustomWorkout', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/getCompletedWorkouts', checkAuthenticated, async (req, res) => {
+router.get('/getCompletedWorkouts', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const username = req.user.username;
         const startIndex = req.query.startIndex;
@@ -54,7 +60,7 @@ router.get('/getCompletedWorkouts', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/saveCompletedWorkout', checkAuthenticated, async (req, res) => {
+router.post('/saveCompletedWorkout', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const username = req.user.username;
         const workoutDetails = req.body;
@@ -66,7 +72,7 @@ router.post('/saveCompletedWorkout', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.patch('/setRating', checkAuthenticated, async (req, res) => {
+router.patch('/setRating', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const workoutCompletedId = req.body.workoutCompletedId;
         const rating = req.body.rating;
@@ -78,7 +84,7 @@ router.patch('/setRating', checkAuthenticated, async (req, res) => {
     }
 });
 
-router.patch('/saveNote', checkAuthenticated, async (req, res) => {
+router.patch('/saveNote', checkAuthenticated, async (req: AuthenticatedRequest, res: Response) => {
     try {
         const workoutCompletedId = req.body.workoutCompletedId;
         const note = req.body.note;
@@ -90,8 +96,6 @@ router.patch('/saveNote', checkAuthenticated, async (req, res) => {
     }
 });
 
-
-
-//set default numbers for initial workout completed save, like 0 for rating and '' for notes, and all the rest
-
 module.exports = router;
+
+export {};

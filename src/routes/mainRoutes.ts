@@ -4,19 +4,20 @@ const { checkAuthenticated, checkNotAuthenticated } = require('../utils/authenti
 const { registerUser } = require('../controllers/usersController');
 const { createNewUserProfile } = require('../controllers/profileController');
 const passport = require('passport');
-const initializePassport = require('../../src/middleware/passport-config.js');
-const { validateForm } = require('../utils/validation.js');
+const initializePassport = require('../../src/middleware/passport-config.ts');
+const { validateForm } = require('../utils/validation.ts');
+import { Request, Response, NextFunction } from 'express';
 initializePassport(passport);
 
-router.get('/checkHealth', (req, res) => {
+router.get('/checkHealth', (req: Request, res: Response) => {
   res.send('healthy');
 });
 
-router.get('/authenticateToken', checkAuthenticated, async (req, res) => {
+router.get('/authenticateToken', checkAuthenticated, async (req: Request, res: Response) => {
     res.send('User authenticated');
 });
 
-router.post('/register', validateForm, checkNotAuthenticated, async(req, res) => {
+router.post('/register', validateForm, checkNotAuthenticated, async(req: Request, res: Response) => {
     try {
       const username = req.body.username;
       const password = req.body.password;
@@ -44,7 +45,8 @@ router.post('/register', validateForm, checkNotAuthenticated, async(req, res) =>
         password: hashedPassword
       }
   
-      req.login(user, async (err) => {
+      //@ts-ignore
+      req.login(user, async (err: Error) => {
         if (err) {
           return res.send(err);
         }
@@ -56,12 +58,13 @@ router.post('/register', validateForm, checkNotAuthenticated, async(req, res) =>
     }
 });
 
-router.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
+router.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req: Request, res: Response) => {
     res.send();
 });
 
-router.post('/logout', checkAuthenticated, (req, res, next) => {
-    req.logOut((err) => {
+router.post('/logout', checkAuthenticated, (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore
+    req.logOut((err: Error) => {
       if (err) { return next(err); }
     });
     res.clearCookie('connect.sid', {
@@ -70,3 +73,5 @@ router.post('/logout', checkAuthenticated, (req, res, next) => {
 });
 
 module.exports = router;
+
+export {};

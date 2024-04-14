@@ -1,6 +1,23 @@
-const  executeQuery = require('../database/db');
+const executeQuery = require('../database/db');
 
-const saveTheCustomWorkout = async (username, workoutDetails) => {
+interface Workout {
+    name: string
+    clubs_exercise: string,
+    diamonds_exercise: string,
+    hearts_exercise: string,
+    spades_exercise: string,
+    aces_exercise: string,
+    breakout_aces: boolean,
+    timer_used: boolean,
+    aces_minutes_to_do: number,
+    aces_seconds_to_do: number
+};
+
+interface CompletedWorkout extends Workout {
+    time_spent: string,
+}
+
+const saveTheCustomWorkout = async (username: string, workoutDetails: Workout) => {
     const query = 
         'insert into saved_custom_workouts(username, name, clubs_exercise, diamonds_exercise, hearts_exercise, \
         spades_exercise, aces_exercise, breakout_aces, timer_used, aces_minutes_to_do, aces_seconds_to_do) \
@@ -14,7 +31,7 @@ const saveTheCustomWorkout = async (username, workoutDetails) => {
     };
 };
 
-const deleteTheCustomWorkout = async (customWorkoutId) => {
+const deleteTheCustomWorkout = async (customWorkoutId: number) => {
     const query = 'delete from saved_custom_workouts where saved_custom_workout_id=$1';
     const values = [customWorkoutId];
 
@@ -25,7 +42,7 @@ const deleteTheCustomWorkout = async (customWorkoutId) => {
     };
 };
 
-const getTheCustomWorkouts = async (username) => {
+const getTheCustomWorkouts = async (username: string) => {
     const query =
         'select saved_custom_workout_id, name, clubs_exercise, diamonds_exercise, hearts_exercise, spades_exercise, aces_exercise, \
         breakout_aces, timer_used, aces_minutes_to_do, aces_seconds_to_do from saved_custom_workouts \
@@ -40,7 +57,7 @@ const getTheCustomWorkouts = async (username) => {
     };
 };
 
-const saveTheCompletedWorkout = async (username, workoutDetails, dateCompleted) => {
+const saveTheCompletedWorkout = async (username: string, workoutDetails: CompletedWorkout, dateCompleted: Date) => {
     const query = 
         'insert into workouts_completed(username, name, time_spent, clubs_exercise, diamonds_exercise, hearts_exercise, \
         spades_exercise, aces_exercise, breakout_aces, timer_used, aces_minutes_to_do, aces_seconds_to_do, calories_burnt, \
@@ -56,7 +73,7 @@ const saveTheCompletedWorkout = async (username, workoutDetails, dateCompleted) 
     };
 };
 
-const getTheCompletedWorkouts = async (username, startIndex) => {
+const getTheCompletedWorkouts = async (username: string, startIndex: number) => {
     const query =
         'select * from workouts_completed where username=$1 order by workout_completed_id desc offset $2 limit 10';
     const values = [username, startIndex];
@@ -69,7 +86,7 @@ const getTheCompletedWorkouts = async (username, startIndex) => {
     };
 };
 
-const setTheRating = async (workoutCompletedId, rating) => {
+const setTheRating = async (workoutCompletedId: number, rating: number) => {
     const query = 'update workouts_completed set rating=$2 where workout_completed_id=$1;';
     const values = [workoutCompletedId, rating];
 
@@ -80,7 +97,7 @@ const setTheRating = async (workoutCompletedId, rating) => {
     }
 };
 
-const saveTheNote = async (workoutCompletedId, note) => {
+const saveTheNote = async (workoutCompletedId: number, note: string) => {
     const query = 'update workouts_completed set notes=$2 where workout_completed_id=$1;';
     const values = [workoutCompletedId, note];
 
@@ -100,3 +117,5 @@ module.exports = {
     setTheRating,
     saveTheNote
 }
+
+export {};

@@ -4,15 +4,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const passport = require('passport');
-const initializePassport = require('./src/middleware/passport-config.js');
+const initializePassport = require('./src/middleware/passport-config.ts');
 const session = require('express-session');
 const cors = require('cors');
-const mainRoutes = require('./src/routes/mainRoutes.js');
-const usersRoutes = require('./src/routes/usersRoutes.js');
-const profileRoutes = require('./src/routes/profileRoutes.js');
-const workoutsRoutes = require('./src/routes/workoutsRoutes.js');
+const mainRoutes = require('./src/routes/mainRoutes.ts');
+const usersRoutes = require('./src/routes/usersRoutes.ts');
+const profileRoutes = require('./src/routes/profileRoutes.ts');
+const workoutsRoutes = require('./src/routes/workoutsRoutes.ts');
 const fileUpload = require('express-fileupload');
-const db = require('./src/configs/db.config.js');
+const db = require('./src/configs/db.config.ts');
 const app = express();
 const dodProdUrl = process.env.DOD_PROD_URL;
 const dodDevUrl = process.env.DOD_DEV_URL;
@@ -37,6 +37,7 @@ app.use(fileUpload());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
+  //@ts-ignore
   origin: (origin, callback) => {
     if (!origin || origin === dodProdUrl || origin === dodDevUrl) {
       callback(null, true);

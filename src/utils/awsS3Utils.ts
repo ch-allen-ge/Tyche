@@ -2,7 +2,7 @@ const S3client = require('../configs/awss3.config');
 
 const S3_BUCKET = process.env.AWS_S3_BUCKET;
 
-const uploadTheProfilePicture = async (image) => {
+const uploadTheProfilePicture = async (image: Blob) => {
     try {
         const key = Math.random().toString(36).slice(2);
 
@@ -19,7 +19,7 @@ const uploadTheProfilePicture = async (image) => {
     }
 };
 
-const deleteTheProfilePicture = async (s3key) => {
+const deleteTheProfilePicture = async (s3key: string) => {
     try {
         const params = {
             Bucket: S3_BUCKET,
@@ -35,4 +35,6 @@ const deleteTheProfilePicture = async (s3key) => {
 module.exports = {
     uploadTheProfilePicture,
     deleteTheProfilePicture
-}
+};
+
+export {};
